@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import moment from 'moment'
-
-const DATA = {
-  timer: 1234567,
-  laps: [123, 456, 789, 132164]
-}
 
 function Timer({ interval, style }) {
   const duration = moment.duration(interval)
@@ -16,13 +11,17 @@ function Timer({ interval, style }) {
   </Text>
 }
 
-function RoundButton({ title, color, background }) {
+function RoundButton({ title, color, background, onPress }) {
   return (
-    <View style={[ styles.button, { backgroundColor: background}]}>
+    <TouchableOpacity
+      onPress={onPress} 
+      style={[ styles.button, { backgroundColor: background}]}
+      activeOpacity={0.7}
+    >
       <View style={ styles.buttonBorder }>
         <Text style={[ styles.buttonTitle, { color }]}>{title}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -74,17 +73,34 @@ function LapsTable({ laps }) {
   )
 }
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Timer interval={DATA.timer} style={styles.timer}/>
-      <ButtonsRow>
-        <RoundButton title='Reset' color='#FFFFFF' background='#3D3D3D'></RoundButton>
-        <RoundButton title='Start' color='#50D167' background='#1B361F'></RoundButton>
-      </ButtonsRow>
-      <LapsTable laps={DATA.laps}/>
-    </View>
-  );
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      laps: [],
+      start: 0,
+      now: 0,
+    }
+  }
+
+  start = () => {
+
+  }
+
+  render() {
+    const { laps, start, now } = this.state
+    const timer = now - start
+    return (
+      <View style={styles.container}>
+        <Timer interval={timer} style={styles.timer}/>
+        <ButtonsRow>
+          <RoundButton title='Reset' color='#FFFFFF' background='#3D3D3D'></RoundButton>
+          <RoundButton title='Start' color='#50D167' background='#1B361F' onPress={this.start}></RoundButton>
+        </ButtonsRow>
+        <LapsTable laps={laps}/>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
