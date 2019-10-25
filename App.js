@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import moment from 'moment'
+import { createAppContainer } from 'react-navigation'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
+import TimerScreen from './Screens/TimerScreen'
+import ClockScreen from './Screens/ClockScreen'
+
 
 function Timer({ interval, style }) {
   const pad = (num) => num < 10 ?  '0' + num : num
@@ -78,7 +83,7 @@ function LapsTable({ laps, timer }) {
   )
 }
 
-export default class App extends Component {
+export class ChronometerScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -182,6 +187,14 @@ export default class App extends Component {
     )
   }
 }
+
+const TabNavigator = createBottomTabNavigator({
+  Timer: TimerScreen,
+  Chronometer: ChronometerScreen,
+  Clock: ClockScreen,
+});
+
+export default createAppContainer(TabNavigator)
 
 const styles = StyleSheet.create({
   container: {
