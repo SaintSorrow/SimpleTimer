@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   lap: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     borderColor: '#151515',
     borderTopWidth: 1,
