@@ -2,6 +2,21 @@ import React, { Component } from 'react'
 import { StyleSheet, ScrollView, View, Text } from 'react-native'
 import Timer from './Timer'
 
+function Lap({ number, interval, fastest, slowest }) {
+  const lapStyle = [
+    styles.lapText,
+    fastest && styles.fastestLap,
+    slowest && styles.slowestLap,
+  ]
+
+  return (
+    <View style={styles.lap}>
+      <Text style={lapStyle}>Lap {number}</Text>
+      <Timer style={lapStyle} interval={interval}/>
+    </View>
+  )
+}
+
 export default function LapsTable({ laps, timer }) {
   const finishedLaps = laps.slice(1)
   let min = Number.MAX_SAFE_INTEGER
@@ -26,21 +41,6 @@ export default function LapsTable({ laps, timer }) {
         />
       ))}
     </ScrollView>
-  )
-}
-
-function Lap({ number, interval, fastest, slowest }) {
-  const lapStyle = [
-    styles.lapText,
-    fastest && styles.fastestLap,
-    slowest && styles.slowestLap,
-  ]
-
-  return (
-    <View style={styles.lap}>
-      <Text style={lapStyle}>Lap {number}</Text>
-      <Timer style={lapStyle} interval={interval}/>
-    </View>
   )
 }
 

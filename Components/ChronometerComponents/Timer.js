@@ -18,6 +18,6 @@ export default function Timer({ interval, style}) {
 
 const styles = StyleSheet.create({
   timerContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row-reverse'
   }
 })

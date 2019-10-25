@@ -9,7 +9,7 @@ export default function ButtonsRow({ children }) {
 
 const styles = StyleSheet.create({
   buttonsRow: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     alignSelf: 'stretch',
     justifyContent: 'space-between',
     marginTop: 80,
