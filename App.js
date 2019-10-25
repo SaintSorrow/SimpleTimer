@@ -88,8 +88,13 @@ export default class App extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
+
   start = () => {
     const now = new Date().getTime()
+
     this.setState({
       start: now,
       now,
@@ -98,7 +103,52 @@ export default class App extends Component {
 
     this.timer = setInterval(() => {
       this.setState({ now: new Date().getTime()})
-    }, 25)
+    }, 100)
+  }
+
+  stop = () => {
+    clearInterval(this.timer)
+    const { laps, now, start } = this.state
+    const [firstLap, ...other] = laps
+
+    this.setState({
+      laps: [firstLap + now - start, ...other],
+      start: 0,
+      now: 0,
+    })
+  }
+
+  lap = () => {
+    const timeStamp = new Date().getTime()
+    const { laps, now, start } = this.state
+    const [firstLap, ...other] = laps
+
+    this.setState({
+      laps: [0, firstLap + now - start, ...other],
+      start: timeStamp,
+      now: timeStamp,
+    })
+  }
+
+  reset = () => {
+    this.setState({
+      laps: [],
+      start: 0,
+      now: 0,
+    })
+  }
+
+  resume = () => {
+    const now = new Date().getTime()
+
+    this.setState({
+      start: now,
+      now
+    })
+
+    this.timer = setInterval(() => {
+      this.setState({ now: new Date().getTime()})
+    }, 100)
   }
 
   render() {
@@ -106,11 +156,27 @@ export default class App extends Component {
     const timer = now - start
     return (
       <View style={styles.container}>
-        <Timer interval={timer} style={styles.timer}/>
-        <ButtonsRow>
-          <RoundButton title='Reset' color='#FFFFFF' background='#3D3D3D'></RoundButton>
-          <RoundButton title='Start' color='#50D167' background='#1B361F' onPress={this.start}></RoundButton>
-        </ButtonsRow>
+        <Timer 
+          interval={laps.reduce((total, curr) => total + curr, 0) + timer} 
+          style={styles.timer}/>
+        {laps.length === 0 && (
+          <ButtonsRow>
+            <RoundButton title='Lap' color='#8B8B90' background='#151515' disabled></RoundButton>
+            <RoundButton title='Start' color='#50D167' background='#1B361F' onPress={this.start}></RoundButton>
+          </ButtonsRow>
+        )}
+        {start > 0 && (
+          <ButtonsRow>
+            <RoundButton title='Lap' color='#FFFFFF' background='#3D3D3D' onPress={this.lap}></RoundButton>
+            <RoundButton title='Stop' color='#E33935' background='#3C1715' onPress={this.stop}></RoundButton>
+          </ButtonsRow>
+        )}
+        {laps.length > 0 && start === 0 && (
+          <ButtonsRow>
+            <RoundButton title='Reset' color='#FFFFFF' background='#3D3D3D' onPress={this.reset}></RoundButton>
+            <RoundButton title='Resume' color='#50D167' background='#1B361F' onPress={this.resume}></RoundButton>
+          </ButtonsRow>
+        )}
         <LapsTable laps={laps} timer={timer}/>
       </View>
     )
@@ -145,7 +211,7 @@ const styles = StyleSheet.create({
     width: 76,
     height: 76,
     borderRadius: 38,
-    borderWidth: 2,
+    borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
