@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import TimerScreen from './Screens/TimerScreen'
@@ -7,24 +7,9 @@ import ClockScreen from './Screens/ClockScreen'
 import Timer from './Components/ChronometerComponents/Timer'
 import RoundButton from './Components/ChronometerComponents/RoundButton'
 import ButtonsRow from './Components/ChronometerComponents/ButtonsRow'
-import Lap from './Components/ChronometerComponents/Lap'
+import LapsTable from './Components/ChronometerComponents/LapsTable'
 
-/*function Lap({ number, interval, fastest, slowest }) {
-  const lapStyle = [
-    styles.lapText,
-    fastest && styles.fastestLap,
-    slowest && styles.slowestLap,
-  ]
-
-  return (
-    <View style={styles.lap}>
-      <Text style={lapStyle}>Lap {number}</Text>
-      <Timer style={lapStyle} interval={interval}/>
-    </View>
-  )
-}*/
-
-function LapsTable({ laps, timer }) {
+/*function LapsTable({ laps, timer }) {
   const finishedLaps = laps.slice(1)
   let min = Number.MAX_SAFE_INTEGER
   let max = Number.MIN_SAFE_INTEGER
@@ -49,7 +34,7 @@ function LapsTable({ laps, timer }) {
       ))}
     </ScrollView>
   )
-}
+}*/
 
 export class ChronometerScreen extends Component {
   constructor(props) {
@@ -177,8 +162,5 @@ const styles = StyleSheet.create({
     fontSize: 46,
     fontWeight: '100',
     width: 75,
-  },
-  scrollView: {
-    alignSelf: 'stretch',
   }
 });
