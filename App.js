@@ -7,9 +7,9 @@ import ClockScreen from './Screens/ClockScreen'
 import Timer from './Components/ChronometerComponents/Timer'
 import RoundButton from './Components/ChronometerComponents/RoundButton'
 import ButtonsRow from './Components/ChronometerComponents/ButtonsRow'
+import Lap from './Components/ChronometerComponents/Lap'
 
-
-function Lap({ number, interval, fastest, slowest }) {
+/*function Lap({ number, interval, fastest, slowest }) {
   const lapStyle = [
     styles.lapText,
     fastest && styles.fastestLap,
@@ -22,7 +22,7 @@ function Lap({ number, interval, fastest, slowest }) {
       <Timer style={lapStyle} interval={interval}/>
     </View>
   )
-}
+}*/
 
 function LapsTable({ laps, timer }) {
   const finishedLaps = laps.slice(1)
@@ -178,24 +178,7 @@ const styles = StyleSheet.create({
     fontWeight: '100',
     width: 75,
   },
-  lapText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-  },
-  lap: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderColor: '#151515',
-    borderTopWidth: 1,
-    paddingVertical: 10,
-  },
   scrollView: {
     alignSelf: 'stretch',
-  },
-  fastestLap: {
-    color: '#4BC05F',
-  },
-  slowestLap: {
-    color: '#CC3531',
   }
 });
