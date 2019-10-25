@@ -1,25 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import moment from 'moment'
 import { createAppContainer } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import TimerScreen from './Screens/TimerScreen'
 import ClockScreen from './Screens/ClockScreen'
+import Timer from './Components/ChronometerComponents/Timer'
 
-
-function Timer({ interval, style }) {
-  const pad = (num) => num < 10 ?  '0' + num : num
-  const duration = moment.duration(interval)
-  const centiSeconds = Math.floor(duration.milliseconds() / 10)
-
-  return (
-    <View style={styles.timerContainer}>
-      <Text style={style}>{pad(duration.minutes())}:</Text>
-      <Text style={style}>{pad(duration.seconds())}.</Text>
-      <Text style={style}>{pad(centiSeconds)}</Text>
-    </View>
-  )
-}
 
 function RoundButton({ title, color, background, onPress, disabled }) {
   return (

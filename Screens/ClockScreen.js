@@ -2,18 +2,18 @@ import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 
 export default class ClockScreen extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
+  constructor(props) {
+    super(props)
+    this.state = {
 
-        }
     }
+  }
 
-    render() {
-        return (
-            <View>
-                <Text>Clock screen</Text>
-            </View>
-        )
-    }
+  render() {
+    return (
+      <View>
+        <Text>Clock screen</Text>
+      </View>
+    )
+  }
 }
