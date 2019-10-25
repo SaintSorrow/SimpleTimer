@@ -1,32 +1,13 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import moment from 'moment'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import TimerScreen from './Screens/TimerScreen'
 import ClockScreen from './Screens/ClockScreen'
 import Timer from './Components/ChronometerComponents/Timer'
+import RoundButton from './Components/ChronometerComponents/RoundButton'
+import ButtonsRow from './Components/ChronometerComponents/ButtonsRow'
 
-
-function RoundButton({ title, color, background, onPress, disabled }) {
-  return (
-    <TouchableOpacity
-      onPress={() => !disabled && onPress()} 
-      style={[ styles.button, { backgroundColor: background}]}
-      activeOpacity={disabled ? 1.0 : 0.7}
-    >
-      <View style={ styles.buttonBorder }>
-        <Text style={[ styles.buttonTitle, { color }]}>{title}</Text>
-      </View>
-    </TouchableOpacity>
-  )
-}
-
-function ButtonsRow({ children }) {
-  return (
-    <View style={styles.buttonsRow}>{children}</View>
-  )
-}
 
 function Lap({ number, interval, fastest, slowest }) {
   const lapStyle = [
@@ -197,31 +178,6 @@ const styles = StyleSheet.create({
     fontWeight: '100',
     width: 75,
   },
-  button: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonTitle: {
-    fontSize: 16,
-  },
-  buttonBorder: {
-    width: 76,
-    height: 76,
-    borderRadius: 38,
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonsRow: {
-    flexDirection: 'row',
-    alignSelf: 'stretch',
-    justifyContent: 'space-between',
-    marginTop: 80,
-    marginBottom: 30,
-  },
   lapText: {
     color: '#FFFFFF',
     fontSize: 16,
@@ -241,8 +197,5 @@ const styles = StyleSheet.create({
   },
   slowestLap: {
     color: '#CC3531',
-  },
-  timerContainer: {
-    flexDirection: 'row'
   }
 });
