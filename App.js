@@ -3,20 +3,25 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-nati
 import moment from 'moment'
 
 function Timer({ interval, style }) {
+  const pad = (num) => num < 10 ?  '0' + num : num
   const duration = moment.duration(interval)
   const centiSeconds = Math.floor(duration.milliseconds() / 10)
 
-  return <Text style={style}>
-    {duration.minutes()}:{duration.seconds()},{centiSeconds}
-  </Text>
+  return (
+    <View style={styles.timerContainer}>
+      <Text style={style}>{pad(duration.minutes())}:</Text>
+      <Text style={style}>{pad(duration.seconds())}.</Text>
+      <Text style={style}>{pad(centiSeconds)}</Text>
+    </View>
+  )
 }
 
-function RoundButton({ title, color, background, onPress }) {
+function RoundButton({ title, color, background, onPress, disabled }) {
   return (
     <TouchableOpacity
-      onPress={onPress} 
+      onPress={() => !disabled && onPress()} 
       style={[ styles.button, { backgroundColor: background}]}
-      activeOpacity={0.7}
+      activeOpacity={disabled ? 1.0 : 0.7}
     >
       <View style={ styles.buttonBorder }>
         <Text style={[ styles.buttonTitle, { color }]}>{title}</Text>
@@ -46,7 +51,7 @@ function Lap({ number, interval, fastest, slowest }) {
   )
 }
 
-function LapsTable({ laps }) {
+function LapsTable({ laps, timer }) {
   const finishedLaps = laps.slice(1)
   let min = Number.MAX_SAFE_INTEGER
   let max = Number.MIN_SAFE_INTEGER
@@ -64,7 +69,7 @@ function LapsTable({ laps }) {
         <Lap 
           number={laps.length - index} 
           key={laps.length - index} 
-          interval={lap}
+          interval={index === 0 ? timer + lap : lap}
           slowest={lap === max}
           fastest={lap === min}
         />
@@ -84,7 +89,16 @@ export default class App extends Component {
   }
 
   start = () => {
+    const now = new Date().getTime()
+    this.setState({
+      start: now,
+      now,
+      laps: [0],
+    })
 
+    this.timer = setInterval(() => {
+      this.setState({ now: new Date().getTime()})
+    }, 25)
   }
 
   render() {
@@ -97,7 +111,7 @@ export default class App extends Component {
           <RoundButton title='Reset' color='#FFFFFF' background='#3D3D3D'></RoundButton>
           <RoundButton title='Start' color='#50D167' background='#1B361F' onPress={this.start}></RoundButton>
         </ButtonsRow>
-        <LapsTable laps={laps}/>
+        <LapsTable laps={laps} timer={timer}/>
       </View>
     )
   }
@@ -115,6 +129,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 46,
     fontWeight: '100',
+    width: 75,
   },
   button: {
     width: 80,
@@ -161,4 +176,7 @@ const styles = StyleSheet.create({
   slowestLap: {
     color: '#CC3531',
   },
+  timerContainer: {
+    flexDirection: 'row'
+  }
 });
